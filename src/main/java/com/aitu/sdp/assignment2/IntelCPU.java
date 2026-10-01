@@ -6,11 +6,11 @@ public final class IntelCPU implements CPU {
     private final int tdpWatts;
 
     public IntelCPU() {
-        this("Intel Core i9-14900K", 253);
+        this("Intel Core i9-14900K");
     }
 
     public IntelCPU(String model) {
-        this(model, defaultTdp(model));
+        this(model, ComponentCatalog.cpuTdpWatts(ComponentFamily.INTEL_NVIDIA, model));
     }
 
     public IntelCPU(String model, int tdpWatts) {
@@ -30,15 +30,7 @@ public final class IntelCPU implements CPU {
 
     @Override
     public String getSocket() {
-        return "LGA1700";
-    }
-
-    private static int defaultTdp(String model) {
-        return switch (model) {
-            case "Intel Core i5-13400" -> 65;
-            case "Intel Core i7-14700K" -> 205;
-            default -> 253;
-        };
+        return ComponentCatalog.socketForCpuFamily(ComponentFamily.INTEL_NVIDIA);
     }
 
     private static String requireModel(String value) {

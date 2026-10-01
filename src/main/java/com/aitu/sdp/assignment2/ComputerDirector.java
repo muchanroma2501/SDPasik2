@@ -25,8 +25,8 @@ public final class ComputerDirector {
         return new GamingComputerBuilder(componentFactory)
                 .ram("64GB DDR5")
                 .storage("2TB NVMe SSD")
-                .powerSupply("1000W 80+ Titanium")
-                .motherboard("Z790 E-ATX")
+                .powerSupply("1000W 80+ Gold")
+                .motherboard("Z790 ATX")
                 .coolingSystem("360mm AIO Liquid Cooling")
                 .build();
     }

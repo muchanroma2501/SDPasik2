@@ -5,9 +5,6 @@ public interface CPU {
     String getModel();
 
     int getTdpWatts();
-    String getSocket();
 
-    default int getTDP() {
-        return getTdpWatts();
-    }
+    String getSocket();
 }

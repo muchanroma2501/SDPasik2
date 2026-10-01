@@ -6,11 +6,11 @@ public final class AMDCPU implements CPU {
     private final int tdpWatts;
 
     public AMDCPU() {
-        this("AMD Ryzen 5 5600G", 65);
+        this("AMD Ryzen 5 7600");
     }
 
     public AMDCPU(String model) {
-        this(model, defaultTdp(model));
+        this(model, ComponentCatalog.cpuTdpWatts(ComponentFamily.AMD, model));
     }
 
     public AMDCPU(String model, int tdpWatts) {
@@ -30,15 +30,7 @@ public final class AMDCPU implements CPU {
 
     @Override
     public String getSocket() {
-        return "AM5";
-    }
-
-    private static int defaultTdp(String model) {
-        return switch (model) {
-            case "AMD Ryzen 5 7600" -> 65;
-            case "AMD Ryzen 7 7800X3D" -> 120;
-            default -> 170;
-        };
+        return ComponentCatalog.socketForCpuFamily(ComponentFamily.AMD);
     }
 
     private static String requireModel(String value) {

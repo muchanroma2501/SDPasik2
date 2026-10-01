@@ -14,10 +14,13 @@ public interface ComponentFactory {
 
     Motherboard createMotherboard(String model);
 
-    String storage(PerformanceTier tier);
+    Storage storage(PerformanceTier tier);
 
-    String powerSupply(PerformanceTier tier);
+    PowerSupply powerSupply(PerformanceTier tier);
 
-    String coolingSystem(PerformanceTier tier);
+    CoolingSystem coolingSystem(PerformanceTier tier);
 
+    PowerSupply createPowerSupply(String model);
+
+    ComponentFamily family();
 }

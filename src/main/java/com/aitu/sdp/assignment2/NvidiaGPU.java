@@ -6,11 +6,11 @@ public final class NvidiaGPU implements GPU {
     private final int tdpWatts;
 
     public NvidiaGPU() {
-        this("NVIDIA GeForce RTX 4090 24GB", 450);
+        this("NVIDIA GeForce RTX 4090 24GB");
     }
 
     public NvidiaGPU(String model) {
-        this(model, defaultTdp(model));
+        this(model, ComponentCatalog.gpuTdpWatts(ComponentFamily.INTEL_NVIDIA, model));
     }
 
     public NvidiaGPU(String model, int tdpWatts) {
@@ -26,15 +26,6 @@ public final class NvidiaGPU implements GPU {
     @Override
     public int getTdpWatts() {
         return tdpWatts;
-    }
-
-    private static int defaultTdp(String model) {
-        return switch (model) {
-            case "NVIDIA GeForce RTX 3050 8GB" -> 130;
-            case "NVIDIA GeForce RTX 4080 Super 16GB" -> 320;
-            case "NVIDIA GeForce RTX 4070 Ti 12GB" -> 285;
-            default -> 450;
-        };
     }
 
     private static String requireModel(String value) {

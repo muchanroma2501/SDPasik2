@@ -4,8 +4,8 @@
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.astanait</groupId>
-    <artifactId>gamingpc-builder</artifactId>
+    <groupId>com.aitu.sdp</groupId>
+    <artifactId>sdpasik2</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -51,6 +51,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
+                <configuration>
+                    <mainClass>${mainClass}</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

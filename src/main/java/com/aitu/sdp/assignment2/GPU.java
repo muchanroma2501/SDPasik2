@@ -5,8 +5,4 @@ public interface GPU {
     String getModel();
 
     int getTdpWatts();
-
-    default int getTDP() {
-        return getTdpWatts();
-    }
 }

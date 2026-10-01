@@ -17,9 +17,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 @RestController
 @RequestMapping("/api/reports")
 public class BridgeReportController {
+    private static final Map<String, Supplier<ReportExporter>> EXPORTERS = Map.of(
+            "json", JsonReportExporter::new,
+            "html", HtmlReportExporter::new);
+    private static final Map<String, Function<ReportExporter, ComputerReport>> REPORTS = Map.of(
+            "summary", SummarySpecsReport::new,
+            "full", FullDiagnosticReport::new);
+
     @GetMapping("/export")
     public ResponseEntity<String> export(
             @RequestParam(name = "reportType", defaultValue = "summary") String reportType,
@@ -36,19 +47,19 @@ public class BridgeReportController {
     }
 
     private ReportExporter createExporter(String format) {
-        return switch (format) {
-            case "json" -> new JsonReportExporter();
-            case "html" -> new HtmlReportExporter();
-            default -> throw invalid("format must be 'json' or 'html'");
-        };
+        Supplier<ReportExporter> exporterFactory = EXPORTERS.get(format);
+        if (exporterFactory == null) {
+            throw invalid("format must be 'json' or 'html'");
+        }
+        return exporterFactory.get();
     }
 
     private ComputerReport createReport(String reportType, ReportExporter exporter) {
-        return switch (reportType) {
-            case "summary" -> new SummarySpecsReport(exporter);
-            case "full" -> new FullDiagnosticReport(exporter);
-            default -> throw invalid("reportType must be 'summary' or 'full'");
-        };
+        Function<ReportExporter, ComputerReport> reportFactory = REPORTS.get(reportType);
+        if (reportFactory == null) {
+            throw invalid("reportType must be 'summary' or 'full'");
+        }
+        return reportFactory.apply(exporter);
     }
 
     private ResponseStatusException invalid(String message) {
