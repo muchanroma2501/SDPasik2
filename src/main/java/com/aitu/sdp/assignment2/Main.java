@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /** Application entry point demonstrating Builder, Factory Method, and Abstract Factory. */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.aitu.sdp")
 public class Main {
     public Main() {
     }
